@@ -1,6 +1,18 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+
+interface Shot {
+  x: number;
+  y: number;
+}
+
+interface ShotProps {
+  x: number;
+  y: number;
+  isTarget: boolean;
+  onClick: () => void;
+}
 
 const Target = () => (
   <svg width="384" height="384" className="absolute">
@@ -13,7 +25,7 @@ const Target = () => (
   </svg>
 );
 
-const Shot = ({ x, y, isTarget, onClick }) => {
+const Shot = ({ x, y, isTarget, onClick }: ShotProps) => {
   if (typeof x !== 'number' || typeof y !== 'number') return null;
   
   return (
@@ -34,8 +46,8 @@ const Shot = ({ x, y, isTarget, onClick }) => {
 };
 
 const ShotMemoryTrainer = () => {
-  const [shots, setShots] = useState([]);
-  const [visibleShots, setVisibleShots] = useState([]);
+  const [shots, setShots] = useState<Shot[]>([]);
+  const [visibleShots, setVisibleShots] = useState<Shot[]>([]);
   const [gameState, setGameState] = useState('ready');
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
