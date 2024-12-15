@@ -83,7 +83,7 @@ const ShotMemoryTrainer = () => {
       setTimeout(() => {
         const newShot = generateShot();
         setShots(prev => {
-          const newShots = [...prev, newShot]);
+          const newShots = [...prev, newShot];
           setVisibleShots(newShots);
            return newShots;
         });
