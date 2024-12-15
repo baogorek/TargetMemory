@@ -14,6 +14,8 @@ interface ShotProps {
   onClick: () => void;
 }
 
+type GameState = 'ready' | 'playing' | 'memorizing' | 'gameover';
+
 const Target = () => (
   <svg width="384" height="384" className="absolute">
     <circle cx="200" cy="200" r="150" fill="none" stroke="#e5e5e5" strokeWidth="2" />
@@ -48,7 +50,7 @@ const Shot = ({ x, y, isTarget, onClick }: ShotProps) => {
 const ShotMemoryTrainer = () => {
   const [shots, setShots] = useState<Shot[]>([]);
   const [visibleShots, setVisibleShots] = useState<Shot[]>([]);
-  const [gameState, setGameState] = useState('ready');
+  const [gameState, setGameState] = useState<GameState>('ready');
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
   
@@ -69,7 +71,7 @@ const ShotMemoryTrainer = () => {
     setScore(0);
   };
 
-  const handleShotClick = (clickedIndex) => {
+  const handleShotClick = (clickedIndex: number) => {
     if (gameState !== 'playing') return;
     
     const newestShotIndex = shots.length - 1;
@@ -80,8 +82,11 @@ const ShotMemoryTrainer = () => {
       
       setTimeout(() => {
         const newShot = generateShot();
-        setShots(prev => [...prev, newShot]);
-        setVisibleShots(prev => [...shots, newShot]);
+        setShots(prev => {
+          const newShots = [...prev, newShot]);
+          setVisibleShots(newShots);
+           return newShots;
+        });
         setScore(prev => prev + 1);
         setGameState('playing');
       }, 3000);
@@ -107,7 +112,7 @@ const ShotMemoryTrainer = () => {
         <div className="relative w-96 h-96 mx-auto mb-4">
           {gameState === 'memorizing' ? (
             <div className="absolute inset-0 bg-black z-20 flex items-center justify-center text-white">
-              Memorizing...
+              Holding in Memory...
             </div>
           ) : (
             <>
