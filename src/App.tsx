@@ -100,57 +100,65 @@ const ShotMemoryTrainer = () => {
   const handleCanvasClick = () => {};
 
   return (
-    <Card className="w-full max-w-xl">
-      <CardHeader>
-        <CardTitle>Shot Pattern Memory Trainer</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="text-center mb-4">
-          <div>Current Score: {score}</div>
-          <div>High Score: {highScore}</div>
-        </div>
-        <div className="relative w-96 h-96 mx-auto mb-4">
-          {gameState === 'memorizing' ? (
-            <div className="absolute inset-0 bg-black z-20 flex items-center justify-center text-white">
-              Holding in Memory...
-            </div>
-          ) : (
-            <>
-              <Target />
-              <div 
-                className="absolute inset-0 border-2 border-gray-300 cursor-crosshair z-10"
-                onClick={handleCanvasClick}
-              >
-                {visibleShots.map((shot, i) => (
-                  <Shot 
-                    key={i} 
-                    x={shot.x} 
-                    y={shot.y} 
-                    isTarget={gameState === 'gameover' && i === shots.length - 1}
-                    onClick={() => handleShotClick(i)}
-                  />
-                ))}
+    <main className="pt-12 flex justify-center p-4">
+      <Card className="w-full max-w-xl">
+        <CardHeader>
+          <CardTitle>Shot Pattern Memory Trainer</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-center mb-4">
+            <div>Current Score: {score}</div>
+            <div>High Score: {highScore}</div>
+          </div>
+          <div className="relative w-96 h-96 mx-auto mb-4">
+            {gameState === 'memorizing' ? (
+              <div className="absolute inset-0 bg-black z-20 flex items-center justify-center text-white">
+                Hold Shot Pattern in Memory!
               </div>
-            </>
-          )}
-        </div>
-        <div className="text-center">
-          {gameState === 'ready' && (
-            <Button onClick={startGame}>Start Game</Button>
-          )}
-          {gameState === 'playing' && (
-            <div>Click where you think the last shot was</div>
-          )}
-          {gameState === 'gameover' && (
-            <>
-              <div className="mb-4">Game Over! Final Score: {score}</div>
-              <div className="mb-4">The red dot shows where the last shot was</div>
-              <Button onClick={startGame}>Play Again</Button>
-            </>
-          )}
-        </div>
-      </CardContent>
-    </Card>
+            ) : (
+              <>
+                <Target />
+                <div 
+                  className="absolute inset-0 border-2 border-gray-300 cursor-crosshair z-10"
+                  onClick={handleCanvasClick}
+                >
+                  {visibleShots.map((shot, i) => (
+                    <Shot 
+                      key={i} 
+                      x={shot.x} 
+                      y={shot.y} 
+                      isTarget={gameState === 'gameover' && i === shots.length - 1}
+                      onClick={() => handleShotClick(i)}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+          <div className="text-center">
+            {gameState === 'ready' && (
+              <Button
+                onClick={startGame}
+                variant="outline"
+                size="lg"
+              >
+                Start Game
+              </Button>
+            )}
+            {gameState === 'playing' && (
+              <div>Click where you think the last shot was</div>
+            )}
+            {gameState === 'gameover' && (
+              <>
+                <div className="mb-4">Game Over! Final Score: {score}</div>
+                <div className="mb-4">The red dot shows where the last shot was</div>
+                <Button onClick={startGame}>Play Again</Button>
+              </>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+    </main>
   );
 };
 
